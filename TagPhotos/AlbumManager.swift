@@ -47,4 +47,5 @@ class AlbumManager {
             handler(image, info)
         }
     }
+    
 }

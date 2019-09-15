@@ -12,7 +12,7 @@ import Photos
 extension PHAssetCollection {
     var photosCount: Int {
         let fetchOptions = PHFetchOptions()
-        fetchOptions.predicate = NSPredicate(format: "mediaType == %d", PHAssetMediaType.image.rawValue)
+        fetchOptions.predicate = NSPredicate(format: "mediaType == %d or mediaType == %d", PHAssetMediaType.image.rawValue, PHAssetMediaType.video.rawValue)
         let result = PHAsset.fetchAssets(in: self, options: fetchOptions)
         return result.count
     }

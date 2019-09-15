@@ -115,7 +115,9 @@ class ContentViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        let asset = model.contentItemForIndexPath(indexPath: indexPath)
+        let detailController = DetailViewController.init(asset: asset)
+        self.navigationController?.pushViewController(detailController, animated: true)
     }
     
 

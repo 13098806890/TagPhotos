@@ -7,14 +7,64 @@
 //
 
 import UIKit
+import Photos
 
 class DetailViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    var asset: PHAsset
+    var imageView: UIImageView = UIImageView.init(frame: CGRect.zero)
+    let swipeGestureLeft = UISwipeGestureRecognizer()
+    let swipeGestureRight = UISwipeGestureRecognizer()
+    
+    init(asset: PHAsset) {
+        self.asset = asset
+        super.init(nibName: nil, bundle: nil)
     }
     
-    func close() {
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.navigationItem.setLeftBarButton(leftBarButtonItem(), animated: false)
+        self.imageView.frame.size = imageViewSize()
+        self.imageView.center = self.view.center
+        self.view.backgroundColor = .black
+        self.view.addSubview(self.imageView)
+        AlbumManager.shared.requsetAssetData(asset: asset, size: self.view.frame.size) { (image, info) in
+            DispatchQueue.main.async {
+                self.imageView.image = image
+            }
+        }
+    }
+    
+    func leftBarButtonItem() -> UIBarButtonItem {
+        let barButtonItem = UIBarButtonItem.init(title: "Album", style: .done, target: self, action: #selector(close))
+        return barButtonItem
+    }
+    
+    func initializeGesture() {
+        self.swipeGestureLeft.addTarget(self, action: #selector(moveToNextAsset))
+        self.swipeGestureLeft.direction = .left
+        self.swipeGestureRight.addTarget(self, action: #selector(close))
+        self.swipeGestureRight.direction = .right
+        self.view.addGestureRecognizer(swipeGestureRight)
+        self.view.addGestureRecognizer(swipeGestureLeft)
+    }
+    
+    func imageViewSize() -> CGSize {
+        let width = self.view.frame.width
+        let height = CGFloat(asset.pixelHeight) / CGFloat(asset.pixelWidth) * width
+        
+        return CGSize(width: width, height: height)
+    }
+    
+    @objc func close() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func moveToNextAsset() {
+        
     }
 
 }
