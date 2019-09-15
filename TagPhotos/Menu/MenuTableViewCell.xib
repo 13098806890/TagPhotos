@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MenuTableViewCell" customModule="TagPhotos" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MenuTableViewCell" id="KGk-i7-Jjw" customClass="MenuTableViewCell" customModule="TagPhotos" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iconLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YHC-F1-8GR">
+                        <rect key="frame" x="8" y="10" width="24" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="7qE-eA-hD2"/>
+                            <constraint firstAttribute="width" constant="24" id="j7w-6N-fRn"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yqh-r1-qvH">
+                        <rect key="frame" x="36" y="10" width="214" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="hDT-OX-U0b"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="count" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VFd-IQ-Vhz">
+                        <rect key="frame" x="258" y="10" width="54" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="54" id="CSE-ai-uaE"/>
+                            <constraint firstAttribute="height" constant="24" id="rVj-4H-Hja"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="VFd-IQ-Vhz" firstAttribute="leading" secondItem="Yqh-r1-qvH" secondAttribute="trailing" constant="8" id="41E-r8-4ZX"/>
+                    <constraint firstAttribute="trailing" secondItem="VFd-IQ-Vhz" secondAttribute="trailing" constant="8" id="4b4-BR-NWb"/>
+                    <constraint firstItem="Yqh-r1-qvH" firstAttribute="leading" secondItem="YHC-F1-8GR" secondAttribute="trailing" constant="4" id="BYj-ma-DS3"/>
+                    <constraint firstItem="Yqh-r1-qvH" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="ZSF-md-h9n"/>
+                    <constraint firstItem="YHC-F1-8GR" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="j0t-38-l6f"/>
+                    <constraint firstItem="YHC-F1-8GR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="nP9-na-6Kl"/>
+                    <constraint firstItem="VFd-IQ-Vhz" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="vNM-Of-cwh"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="countLabel" destination="VFd-IQ-Vhz" id="2tl-td-fGe"/>
+                <outlet property="descriptionLabel" destination="Yqh-r1-qvH" id="n6m-i2-VLQ"/>
+                <outlet property="iconLabel" destination="YHC-F1-8GR" id="9py-pX-Kug"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>
