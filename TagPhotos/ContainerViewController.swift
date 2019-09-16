@@ -26,8 +26,6 @@ class ContainerViewController: UIViewController {
                 _contentViewController = newValue
                 addChild(_contentViewController!)
                 view.addSubview(_contentViewController!.view)
-                _contentViewController?.view.addGestureRecognizer(swipeGestureRight)
-                _contentViewController?.view.addGestureRecognizer(swipeGestureLeft)
             }
         }
         get {
@@ -58,6 +56,8 @@ class ContainerViewController: UIViewController {
         self.swipeGestureLeft.direction = .left
         self.swipeGestureRight.addTarget(self, action: #selector(openMenu))
         self.swipeGestureRight.direction = .right
+        view.addGestureRecognizer(swipeGestureRight)
+        view.addGestureRecognizer(swipeGestureLeft)
     }
     
     override func viewDidLoad() {

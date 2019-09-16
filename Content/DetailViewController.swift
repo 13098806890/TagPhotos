@@ -14,6 +14,7 @@ class DetailViewController: UIViewController {
     var imageView: UIImageView = UIImageView.init(frame: CGRect.zero)
     let swipeGestureLeft = UISwipeGestureRecognizer()
     let swipeGestureRight = UISwipeGestureRecognizer()
+    let swipeGestureDown = UISwipeGestureRecognizer()
     
     init(asset: PHAsset) {
         self.asset = asset
@@ -27,6 +28,7 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.setLeftBarButton(leftBarButtonItem(), animated: false)
+        self.initializeGesture()
         self.imageView.frame.size = imageViewSize()
         self.imageView.center = self.view.center
         self.view.backgroundColor = .black
@@ -46,10 +48,13 @@ class DetailViewController: UIViewController {
     func initializeGesture() {
         self.swipeGestureLeft.addTarget(self, action: #selector(moveToNextAsset))
         self.swipeGestureLeft.direction = .left
-        self.swipeGestureRight.addTarget(self, action: #selector(close))
+        self.swipeGestureDown.addTarget(self, action: #selector(close))
+        self.swipeGestureDown.direction = .down
+        self.swipeGestureRight.addTarget(self, action: #selector(moveToPreviousAsset))
         self.swipeGestureRight.direction = .right
-        self.view.addGestureRecognizer(swipeGestureRight)
         self.view.addGestureRecognizer(swipeGestureLeft)
+        self.view.addGestureRecognizer(swipeGestureRight)
+        self.view.addGestureRecognizer(swipeGestureDown)
     }
     
     func imageViewSize() -> CGSize {
@@ -61,6 +66,10 @@ class DetailViewController: UIViewController {
     
     @objc func close() {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func moveToPreviousAsset() {
+        
     }
     
     @objc func moveToNextAsset() {
