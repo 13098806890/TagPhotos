@@ -56,7 +56,7 @@ class MenuController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func setCellContent(cell: MenuTableViewCell, at indexPath: IndexPath) {
-        let cellModel = model.menuItemForIndexPath(indexPath: indexPath)
+        let cellModel = model.itemForIndexPath(indexPath: indexPath)
         cell.iconLabel.text = cellModel.0
         cell.descriptionLabel.text = cellModel.1
         cell.countLabel.text = cellModel.2

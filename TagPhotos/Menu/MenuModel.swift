@@ -10,7 +10,7 @@ import Foundation
 import Photos
 
 protocol MenuModelProtol: ModelProtocol{
-    func menuItemForIndexPath(indexPath: IndexPath) ->(String, String, String)
+    func itemForIndexPath(indexPath: IndexPath) ->(String, String, String)
 }
 
 class MenuModel: MenuModelProtol {
@@ -41,7 +41,7 @@ class MenuModel: MenuModelProtol {
         }
     }
     
-    func menuItemForIndexPath(indexPath: IndexPath) ->(String, String, String) {
+    func itemForIndexPath(indexPath: IndexPath) ->(String, String, String) {
         let section = indexPath.section
         let row = indexPath.row
         switch section {

@@ -25,6 +25,7 @@
 		65CBD6EC232D452E008B5F1B /* ContentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CBD6EA232D452E008B5F1B /* ContentCollectionViewCell.swift */; };
 		65CBD6ED232D452E008B5F1B /* ContentCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65CBD6EB232D452E008B5F1B /* ContentCollectionViewCell.xib */; };
 		65CBD6EF232E20CA008B5F1B /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CBD6EE232E20CA008B5F1B /* DetailViewController.swift */; };
+		65CBD6F3232FBD03008B5F1B /* LoopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CBD6F2232FBD03008B5F1B /* LoopView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		65CBD6EA232D452E008B5F1B /* ContentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCollectionViewCell.swift; sourceTree = "<group>"; };
 		65CBD6EB232D452E008B5F1B /* ContentCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContentCollectionViewCell.xib; sourceTree = "<group>"; };
 		65CBD6EE232E20CA008B5F1B /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		65CBD6F2232FBD03008B5F1B /* LoopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoopView.swift; path = ../../../GitHub/TagPhotos/Content/LoopView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +146,7 @@
 				65CBD6EA232D452E008B5F1B /* ContentCollectionViewCell.swift */,
 				65CBD6EB232D452E008B5F1B /* ContentCollectionViewCell.xib */,
 				65CBD6EE232E20CA008B5F1B /* DetailViewController.swift */,
+				65CBD6F2232FBD03008B5F1B /* LoopView.swift */,
 			);
 			path = Content;
 			sourceTree = "<group>";
@@ -252,6 +255,7 @@
 			files = (
 				65CBD6EF232E20CA008B5F1B /* DetailViewController.swift in Sources */,
 				65CBD6DF232D2066008B5F1B /* MenuTableViewCell.swift in Sources */,
+				65CBD6F3232FBD03008B5F1B /* LoopView.swift in Sources */,
 				65CBD6D3232BF992008B5F1B /* ContainerViewController.swift in Sources */,
 				65CBD6E4232D3F5E008B5F1B /* AllPhotoViewController.swift in Sources */,
 				65CBD6D9232D0B6D008B5F1B /* AlbumManager.swift in Sources */,

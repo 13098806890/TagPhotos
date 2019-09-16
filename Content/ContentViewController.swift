@@ -102,7 +102,7 @@ class ContentViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func setupContentCollectionViewCell(cell: ContentCollectionViewCell, at indexPath: IndexPath) {
-        let asset = model.contentItemForIndexPath(indexPath: indexPath)
+        let asset = model.itemForIndexPath(indexPath: indexPath)
         queue.addOperation {
             AlbumManager.shared.requsetAssetData(asset: asset, size: self.size()) { (image, info) in
                 DispatchQueue.main.async {
@@ -115,8 +115,7 @@ class ContentViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let asset = model.contentItemForIndexPath(indexPath: indexPath)
-        let detailController = DetailViewController.init(asset: asset)
+        let detailController = DetailViewController.init(model: model, indexPath: indexPath)
         self.navigationController?.pushViewController(detailController, animated: true)
     }
     
