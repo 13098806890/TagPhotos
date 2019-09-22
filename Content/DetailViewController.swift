@@ -9,12 +9,12 @@
 import UIKit
 import Photos
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, LoopViewDelegate {
     var model: ContentModel
     var indexPath: IndexPath
-    var imageView: UIImageView = UIImageView.init(frame: CGRect.zero)
-    var previousImageView: UIImageView = UIImageView.init(frame: CGRect.zero)
-    var nextImageView: UIImageView = UIImageView.init(frame: CGRect.zero)
+    var imageView: UIImageView?
+    var previousImageView: UIImageView?
+    var nextImageView: UIImageView?
     var loopView: LoopView?
     let swipeGestureDown = UISwipeGestureRecognizer()
     
@@ -32,47 +32,46 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         self.navigationItem.setLeftBarButton(leftBarButtonItem(), animated: false)
         self.initializeGesture()
-        self.loopView = LoopView.init(size: view.frame.size, contents: imageViews())
+        self.initializeImageViews()
+        self.loopView = LoopView.init(size: view.frame.size, loopViewDelegate: self)
         self.view.backgroundColor = .black
         self.view.addSubview(self.loopView!)
         
     }
     
-    func imageViews() -> [UIImageView] {
-        var views = [UIImageView]()
+    func initializeImageViews() {
         if let previousIndexPath = model.getPreviousIndexPath(indexPath: self.indexPath) {
             let asset = model.itemForIndexPath(indexPath: previousIndexPath)
-            previousImageView.frame.size = imageViewSize(asset: asset)
-            previousImageView.center = view.center
+            previousImageView = UIImageView.init()
+            previousImageView?.frame.size = imageViewSize(asset: asset)
+            previousImageView?.center = view.center
             AlbumManager.shared.requsetAssetData(asset: asset, size: self.view.frame.size) { (image, info) in
                 DispatchQueue.main.async {
-                    self.previousImageView.image = image
+                    self.previousImageView?.image = image
                 }
             }
-            views.append(previousImageView)
         }
         let asset = self.model.itemForIndexPath(indexPath: self.indexPath)
-        imageView.frame.size = imageViewSize(asset: asset)
-        imageView.center = view.center
+        imageView = UIImageView.init()
+        imageView?.frame.size = imageViewSize(asset: asset)
+        imageView?.center = view.center
         AlbumManager.shared.requsetAssetData(asset: asset, size: self.view.frame.size) { (image, info) in
             DispatchQueue.main.async {
-                self.imageView.image = image
+                self.imageView?.image = image
             }
         }
-        views.append(imageView)
-        if let nextIndexPath = model.getPreviousIndexPath(indexPath: self.indexPath) {
+        if let nextIndexPath = model.getNextIndexPath(indexPath: self.indexPath) {
             let asset = model.itemForIndexPath(indexPath: nextIndexPath)
-            nextImageView.frame.size = imageViewSize(asset: asset)
-            nextImageView.center = view.center
+            nextImageView = UIImageView.init()
+            nextImageView?.frame.size = imageViewSize(asset: asset)
+            nextImageView?.center = view.center
             AlbumManager.shared.requsetAssetData(asset: asset, size: self.view.frame.size) { (image, info) in
                 DispatchQueue.main.async {
-                    self.nextImageView.image = image
+                    self.nextImageView?.image = image
                 }
             }
-            views.append(nextImageView)
         }
         
-        return views
     }
     
     
@@ -95,7 +94,31 @@ class DetailViewController: UIViewController {
     }
     
     @objc func close() {
-        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    func canMoveToNext() -> Bool {
+        return nextImageView != nil
+    }
+    
+    func canMoveToPreview() -> Bool {
+        return previousImageView != nil
+    }
+    
+    func contents() -> [UIView] {
+        var contents = [UIView]()
+        if let previousImageView = previousImageView {
+            contents.append(previousImageView)
+        }
+        if let imageView = imageView {
+            contents.append(imageView)
+        }
+        if let nextImageView = nextImageView {
+            contents.append(nextImageView)
+        }
+        
+        return contents
     }
 
 }

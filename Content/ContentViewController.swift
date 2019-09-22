@@ -116,7 +116,8 @@ class ContentViewController: UIViewController, UICollectionViewDelegate, UIColle
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let detailController = DetailViewController.init(model: model, indexPath: indexPath)
-        self.navigationController?.pushViewController(detailController, animated: true)
+        detailController.modalTransitionStyle = .coverVertical
+        self.present(detailController, animated: true, completion: nil)
     }
     
 
