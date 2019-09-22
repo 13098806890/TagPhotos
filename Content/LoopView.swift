@@ -15,7 +15,7 @@ protocol LoopViewDelegate: NSObject {
     func reloadContent()
 }
 
-class LoopView: UIScrollView, UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate {
+class LoopView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate {
     
     weak var loopViewDelegate: LoopViewDelegate?
     private var size: CGSize
