@@ -102,7 +102,7 @@ class ContentViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func setupContentCollectionViewCell(cell: ContentCollectionViewCell, at indexPath: IndexPath) {
-        let asset = model.itemForIndexPath(indexPath: indexPath)
+        let asset = model.itemAtIndexPath(indexPath: indexPath)
         queue.addOperation {
             AlbumManager.shared.requsetAssetData(asset: asset, size: self.size()) { (image, info) in
                 DispatchQueue.main.async {

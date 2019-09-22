@@ -9,13 +9,11 @@
 import UIKit
 import Photos
 
-class DetailViewController: UIViewController, LoopViewDelegate {
+class DetailViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+
     var model: ContentModel
+    var collectionView: UICollectionView?
     var indexPath: IndexPath
-    var imageView: UIImageView?
-    var previousImageView: UIImageView?
-    var nextImageView: UIImageView?
-    var loopView: LoopView?
     let swipeGestureDown = UISwipeGestureRecognizer()
     
     init(model: ContentModel, indexPath: IndexPath) {
@@ -28,52 +26,31 @@ class DetailViewController: UIViewController, LoopViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func pageSize() -> CGSize {
+        return CGSize(width: self.view.frame.width - 10, height: self.view.frame.height)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.setLeftBarButton(leftBarButtonItem(), animated: false)
         self.initializeGesture()
-        self.initializeImageViews()
-        self.loopView = LoopView.init(size: view.frame.size, loopViewDelegate: self)
         self.view.backgroundColor = .black
-        self.view.addSubview(self.loopView!)
-        
+        self.initializeCollectionView()
+        self.view.addSubview(self.collectionView!)
+        self.collectionView?.scrollToItem(at: self.indexPath, at: UICollectionView.ScrollPosition.centeredHorizontally, animated: false)
     }
     
-    func initializeImageViews() {
-        if let previousIndexPath = model.getPreviousIndexPath(indexPath: self.indexPath) {
-            let asset = model.itemForIndexPath(indexPath: previousIndexPath)
-            previousImageView = UIImageView.init()
-            previousImageView?.frame.size = imageViewSize(asset: asset)
-            previousImageView?.center = view.center
-            AlbumManager.shared.requsetAssetData(asset: asset, size: self.view.frame.size) { (image, info) in
-                DispatchQueue.main.async {
-                    self.previousImageView?.image = image
-                }
-            }
-        }
-        let asset = self.model.itemForIndexPath(indexPath: self.indexPath)
-        imageView = UIImageView.init()
-        imageView?.frame.size = imageViewSize(asset: asset)
-        imageView?.center = view.center
-        AlbumManager.shared.requsetAssetData(asset: asset, size: self.view.frame.size) { (image, info) in
-            DispatchQueue.main.async {
-                self.imageView?.image = image
-            }
-        }
-        if let nextIndexPath = model.getNextIndexPath(indexPath: self.indexPath) {
-            let asset = model.itemForIndexPath(indexPath: nextIndexPath)
-            nextImageView = UIImageView.init()
-            nextImageView?.frame.size = imageViewSize(asset: asset)
-            nextImageView?.center = view.center
-            AlbumManager.shared.requsetAssetData(asset: asset, size: self.view.frame.size) { (image, info) in
-                DispatchQueue.main.async {
-                    self.nextImageView?.image = image
-                }
-            }
-        }
-        
+    func initializeCollectionView() {
+        let layout = UICollectionViewFlowLayout.init()
+        layout.scrollDirection = .horizontal
+        layout.itemSize = pageSize()
+        collectionView = UICollectionView.init(frame: self.view.frame, collectionViewLayout: layout)
+        collectionView?.delegate = self
+        collectionView?.dataSource = self
+        collectionView?.isPagingEnabled = true
+        collectionView?.register(UICollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "DetailViewControllerCell")
+        collectionView?.showsVerticalScrollIndicator = false
     }
-    
     
     func leftBarButtonItem() -> UIBarButtonItem {
         let barButtonItem = UIBarButtonItem.init(title: "Album", style: .done, target: self, action: #selector(close))
@@ -87,7 +64,7 @@ class DetailViewController: UIViewController, LoopViewDelegate {
     }
     
     func imageViewSize(asset: PHAsset) -> CGSize {
-        let width = self.view.frame.width
+        let width = pageSize().width
         let height = CGFloat(asset.pixelHeight) / CGFloat(asset.pixelWidth) * width
         
         return CGSize(width: width, height: height)
@@ -97,28 +74,37 @@ class DetailViewController: UIViewController, LoopViewDelegate {
         self.dismiss(animated: true, completion: nil)
     }
     
-    
-    func canMoveToNext() -> Bool {
-        return nextImageView != nil
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.model.count()
     }
     
-    func canMoveToPreview() -> Bool {
-        return previousImageView != nil
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DetailViewControllerCell", for: indexPath)
+        
+        return cell
     }
     
-    func contents() -> [UIView] {
-        var contents = [UIView]()
-        if let previousImageView = previousImageView {
-            contents.append(previousImageView)
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let row = indexPath.row
+        let asset = self.model.itemAtIndex(index: row)
+        for view in cell.subviews {
+            view.removeFromSuperview()
         }
-        if let imageView = imageView {
-            contents.append(imageView)
-        }
-        if let nextImageView = nextImageView {
-            contents.append(nextImageView)
+
+        cell.addSubview(self.imageContainer(asset: asset))
+    }
+    
+    func imageContainer(asset: PHAsset) -> UIView {
+        let imageView = UIImageView.init()
+        imageView.frame.size = imageViewSize(asset: asset)
+        imageView.center = view.center
+        AlbumManager.shared.requsetAssetData(asset: asset, size: self.view.frame.size) { (image, info) in
+            DispatchQueue.main.async {
+                imageView.image = image
+            }
         }
         
-        return contents
+        return imageView
     }
 
 }

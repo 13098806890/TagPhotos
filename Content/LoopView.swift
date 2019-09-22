@@ -45,7 +45,6 @@ class LoopView: UICollectionView, UICollectionViewDelegate, UICollectionViewData
         self.showsVerticalScrollIndicator = false
         if contents().count > 0 {
             self.isPagingEnabled = true
-            self.isScrollEnabled = false
             if contents().count == 3 {
                 self.scrollToItem(at: IndexPath(row: 1, section: 0), at: UICollectionView.ScrollPosition.centeredHorizontally, animated: false)
             }
